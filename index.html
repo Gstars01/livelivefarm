@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>생생팜</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Jua&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <a class="logo" href="#"><span class="mini-leaf"></span>생생팜</a>
+  <nav>
+    <a href="#soil">물+토양</a>
+    <a href="#gas">가스</a>
+    <a href="#sun">햇빛</a>
+    <a href="#pest">해충</a>
+    <button class="conn" id="conn-open" type="button"><span class="dot"></span><span id="conn-label">예시 데이터</span></button>
+  </nav>
+</header>
+
+<div class="linkbar demo" id="linkbar" role="status" aria-live="polite">
+  <span class="dot"></span>
+  <span id="linkbar-text">아두이노가 연결되지 않아 예시 데이터를 보여주고 있어요</span>
+  <button type="button" id="linkbar-action">연결하기</button>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="assertive"></div>
+
+<div id="home">
+  <section class="hero">
+    <span class="kicker">오늘의 생생팜</span>
+    <h1>우리 농장, <span class="green">잘 자라고 있어요</span></h1>
+  </section>
+
+  <section class="blobs" id="env">
+    <span class="seed" style="width:56px;height:72px;right:10px;top:46%;"></span>
+    <span class="seed" style="width:50px;height:56px;left:14px;top:50%;"></span>
+
+    <a class="blob b1" href="#soil">
+      <span class="deco" style="top:16%;right:14%">🌴</span>
+      <span class="deco small" style="bottom:12%;left:18%">🌱</span>
+      <h2>물+토양</h2>
+      <div class="reading">토양 수분 <strong data-v="soil">--</strong>%</div>
+      <span class="status" data-s="soil">대기 중</span>
+      <span class="more">섬에 가보기 →</span>
+    </a>
+
+    <a class="blob b2" href="#gas">
+      <span class="deco" style="top:20%;left:12%">🌳</span>
+      <span class="deco small" style="bottom:14%;right:20%">🍃</span>
+      <h2>가스</h2>
+      <div class="reading">CO₂ <strong data-v="gas">--</strong> ppm</div>
+      <span class="status" data-s="gas">대기 중</span>
+      <span class="more">섬에 가보기 →</span>
+    </a>
+
+    <a class="blob b3" href="#sun">
+      <span class="deco" style="top:22%;right:12%">🌻</span>
+      <span class="deco small" style="bottom:12%;left:16%">🌴</span>
+      <h2>햇빛</h2>
+      <div class="reading">조도 <strong data-v="sun">--</strong> lux</div>
+      <span class="status" data-s="sun">대기 중</span>
+      <span class="more">섬에 가보기 →</span>
+    </a>
+
+    <a class="blob b4" href="#pest">
+      <span class="deco" style="top:18%;left:14%">🌲</span>
+      <span class="deco small" style="bottom:14%;right:16%">🐞</span>
+      <h2>해충</h2>
+      <div class="reading">오늘 감지 <strong data-v="pest">--</strong>마리</div>
+      <span class="status" data-s="pest">대기 중</span>
+      <span class="more">섬에 가보기 →</span>
+    </a>
+  </section>
+</div>
+
+<main class="detail" id="page" hidden></main>
+
+<footer>🌱 생생팜</footer>
+
+<dialog class="panel" id="panel">
+  <h3>아두이노 연결</h3>
+  <p class="hint" id="panel-state">연결돼 있지 않아요.</p>
+
+  <div class="row">
+    <button class="btn" id="btn-ble" type="button">
+      블루투스(BLE)로 연결
+      <small>HM-10 · AT-09 · BT05 · ESP32</small>
+    </button>
+    <button class="btn" id="btn-serial" type="button">
+      시리얼 포트로 연결
+      <small>HC-05 · HC-06 (먼저 Windows에서 페어링) · USB 케이블</small>
+    </button>
+  </div>
+  <p class="error" id="panel-error" hidden></p>
+
+  <p class="hint">마지막으로 받은 데이터</p>
+  <code id="panel-raw">아직 받은 데이터가 없어요</code>
+  <p class="hint">아두이노는 <b>[PERIODIC] Soli : 습도,Light : 조도,Gas : 가스</b> 형식으로 한 줄씩 보내면 돼요. Chrome · Edge에서만 동작해요.</p>
+
+  <div class="panel-foot">
+    <button class="btn ghost" id="btn-disconnect" type="button" disabled>연결 끊기</button>
+    <button class="btn ghost" id="btn-clear" type="button">기록 지우기</button>
+    <form method="dialog"><button class="btn ghost">닫기</button></form>
+  </div>
+</dialog>
+
+<script src="farm.js"></script>
+<script src="connect.js"></script>
+<script>
+  initApp();
+  initConnect();
+</script>
+</body>
+</html>
